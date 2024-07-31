@@ -27,7 +27,7 @@ Using Spring Boot, create a simple API for creating and managing items. The item
 
 ## To Do List
 ### Pre
-  - [x] Decide on a model. I rolled a dice and got cars. Feel free to reroll!
+  - [x] Decide on a model. I rolled a dice and got cars. **Feel free to reroll!**
       - [ ] ~Videogames~
       - [ ] 1 Books?
       - [ ] 2 Sports?
