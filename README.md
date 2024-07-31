@@ -27,14 +27,14 @@ Using Spring Boot, create a simple API for creating and managing items. The item
 
 ## To Do List
 ### Pre
-  - [ ] Decide on a model
-      - [ ] Not video games! Noted.
-      - [ ] Books?
-      - [ ] Sports?
-      - [ ] Exercises?
-      - [ ] Pets?
-      - [ ] Cars?
-      - [ ] Students?
+  - [x] Decide on a model. I rolled a dice and got cars. Feel free to reroll!
+      - [ ] ~Videogames~
+      - [ ] 1 Books?
+      - [ ] 2 Sports?
+      - [ ] 3 Exercises?
+      - [ ] 4 Pets?
+      - [x] 5 Cars?
+      - [ ] 6 Students?
   - [ ] Create Schema
     - [ ] model
     - [ ] user
