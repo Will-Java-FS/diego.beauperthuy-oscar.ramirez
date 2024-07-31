@@ -41,12 +41,17 @@ Using Spring Boot, create a simple API for creating and managing items. The item
 - Approx. 5 Minutes in length
 
 ## To Do List
-    - [ ] As a user, I can create a new Item
-    - [ ] As a user, I can view all Items
-    - [ ] As a user, I can view a singular Item by its ID (HINT: Use Path Params to select a Item by its ID)
-    - [ ] As a user, I can update a Item (Change the name or other properties)
-    - [ ] As a user, I can delete a Item by its ID (HINT: Use Path Params to select a Item by its ID)
-    - [ ] As a user, I can create an account to hold my Items
-    - [ ] As a user, I can login to my account (which is stored in the database)
-    - [ ] As a user, I can view the Items associated with my account
+  - [ ] Decide on a model
+      - [ ] Not video games! Noted.
+      - [ ] Books?
+      - [ ] Sports?
+      - [ ] Exercises?
+  - [ ] As a user, I can create a new Item
+  - [ ] As a user, I can view all Items
+  - [ ] As a user, I can view a singular Item by its ID (HINT: Use Path Params to select a Item by its ID)
+  - [ ] As a user, I can update a Item (Change the name or other properties)
+  - [ ] As a user, I can delete a Item by its ID (HINT: Use Path Params to select a Item by its ID)
+  - [ ] As a user, I can create an account to hold my Items
+  - [ ] As a user, I can login to my account (which is stored in the database)
+  - [ ] As a user, I can view the Items associated with my account
 
