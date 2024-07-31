@@ -32,6 +32,9 @@ Using Spring Boot, create a simple API for creating and managing items. The item
       - [ ] Books?
       - [ ] Sports?
       - [ ] Exercises?
+      - [ ] Pets?
+      - [ ] Cars?
+      - [ ] Students?
   - [ ] Create Schema
     - [ ] model
     - [ ] user
