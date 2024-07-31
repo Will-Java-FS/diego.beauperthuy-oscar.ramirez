@@ -41,11 +41,17 @@ Using Spring Boot, create a simple API for creating and managing items. The item
 - Approx. 5 Minutes in length
 
 ## To Do List
+### Pre
   - [ ] Decide on a model
       - [ ] Not video games! Noted.
       - [ ] Books?
       - [ ] Sports?
       - [ ] Exercises?
+  - [ ] Create Schema
+    - [ ] model
+    - [ ] user
+  - [ ] Create/Insert production demo data
+### Post
   - [ ] As a user, I can create a new Item
   - [ ] As a user, I can view all Items
   - [ ] As a user, I can view a singular Item by its ID (HINT: Use Path Params to select a Item by its ID)
