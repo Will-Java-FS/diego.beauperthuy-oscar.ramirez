@@ -36,9 +36,7 @@ public class CarServiceImpl implements CarService {
 
 
     public Car findCarById(long id) {
-        return cr.findById(id).isPresent()
-                ? cr.findById(id).get()
-                : null;
+        return cr.findById(id);
     }
 
 
@@ -50,16 +48,19 @@ public class CarServiceImpl implements CarService {
 
     // UPDATE METHOD(S)
     public Car updateCar(Car c) {
-        return cr.save(c);
+        if (cr.findAll().contains(c)) {
+            return cr.save(c);
+        }
+        return null;
     }
 
 
     // DELETE METHOD(S)
-    public Car deleteCarById(long id) {
+    /*public Car deleteCarById(long id) {
         Car c = cr.findById(id).get();
         cr.deleteById(id);
         return c;
-    }
+    }*/
 
     public Car deleteCar(Car c) {
         cr.delete(c);
