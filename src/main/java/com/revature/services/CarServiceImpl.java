@@ -1,6 +1,6 @@
 package com.revature.services;
 
-import com.revature.models.Car;
+import com.revature.model.Car;
 import com.revature.repositories.CarRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
