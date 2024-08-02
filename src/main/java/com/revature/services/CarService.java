@@ -19,7 +19,7 @@ public class CarService {
     }
 
     // READ METHOD(S)
-    public List<Car> getAllCars() {
+    public List<Car> findAllCars() {
         return cr.findAll();
     }
 

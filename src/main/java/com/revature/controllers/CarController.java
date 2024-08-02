@@ -2,8 +2,7 @@ package com.revature.controllers;
 
 import com.revature.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.revature.model.Car;
 import java.util.List;
@@ -18,13 +17,19 @@ public class CarController {
         this.cs = cs;
     }
 
-    @GetMapping("hello")
+/*    @GetMapping("hello")
     public String greeting() {
         return "ARE WE RUNNING";
-    }
+    }*/
+
     @GetMapping("car")
     public List<Car> getAllCars(){
-        return cs.getAllCars();
+        return cs.findAllCars();
+    }
+
+    @GetMapping("car/{id}")
+    public Car findCarById(@PathVariable int id) {
+        return cs.findCarById(id);
     }
 
 
