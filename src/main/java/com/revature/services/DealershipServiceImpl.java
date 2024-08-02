@@ -47,8 +47,8 @@ public class DealershipServiceImpl {
     }
 
     //Delete Dealership by ID
-    public Dealership deleteDealershipById(long id) {
-        Dealership ds = dealershipRepo.findById(id).get();
+    public Dealership deleteDealershipById(int id) {
+        Dealership ds = dealershipRepo.findById(id);
         dealershipRepo.deleteById(id);
         return ds;
     }
