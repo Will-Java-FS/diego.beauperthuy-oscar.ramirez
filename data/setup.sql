@@ -14,7 +14,7 @@ create table cars(
 	make varchar(50) NOT NULL,
 	model varchar(50) NOT NULL,
 	year smallint,
-	dealership_id int REFERENCES dealerships(dealership_id) ON DELETE SET NULL
+	dealership_fk int REFERENCES dealerships(dealership_id) ON DELETE SET NULL
 );
 
 ALTER TABLE cars

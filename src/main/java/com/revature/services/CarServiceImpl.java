@@ -1,6 +1,7 @@
 package com.revature.services;
 
 import com.revature.model.Car;
+import com.revature.model.Dealership;
 import com.revature.repositories.CarRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,9 @@ public class CarServiceImpl implements CarService {
         return cr.findCarsByYear(year);
     }
 
+    public List<Car> findCarsByDealership(Dealership dealership) {
+        return cr.findCarsByDealership(dealership);
+    }
 
     public Car findCarById(long id) {
         return cr.findById(id);
@@ -56,15 +60,15 @@ public class CarServiceImpl implements CarService {
 
 
     // DELETE METHOD(S)
+    public Car deleteCar(Car c) {
+        cr.delete(c);
+        return c;
+    }
+
     /*public Car deleteCarById(long id) {
         Car c = cr.findById(id).get();
         cr.deleteById(id);
         return c;
     }*/
-
-    public Car deleteCar(Car c) {
-        cr.delete(c);
-        return c;
-    }
 
 }
