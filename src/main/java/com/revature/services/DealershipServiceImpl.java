@@ -23,6 +23,10 @@ public class DealershipServiceImpl {
         return dealershipRepo.findAll();
     }
 
+    public Dealership findById(int id){
+        return dealershipRepo.findById(id);
+    }
+
     public List<Dealership> findDealershipByName(String name){
         return dealershipRepo.findDealershipByName(name);
     }
