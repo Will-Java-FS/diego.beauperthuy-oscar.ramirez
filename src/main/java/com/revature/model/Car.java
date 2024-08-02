@@ -13,8 +13,9 @@ import lombok.NoArgsConstructor;
 public class Car {
 
     @Id
+    @Column(name = "car_id", updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
     @Column
     private String make;
     @Column
@@ -22,8 +23,8 @@ public class Car {
     @Column
     private int year;
     @ManyToOne(fetch=FetchType.EAGER)
-    @JsonBackReference
     @JoinColumn(name = "dealership_fk")
+    @JsonBackReference
     private Dealership dealership;
 
 }
