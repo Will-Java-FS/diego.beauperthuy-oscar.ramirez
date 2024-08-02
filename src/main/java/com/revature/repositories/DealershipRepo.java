@@ -9,6 +9,8 @@ import java.util.List;
 @Repository
 public interface DealershipRepo extends JpaRepository<Dealership, Long> {
 
+    Dealership findById(int id);
+    void deleteById(int id);
     List<Dealership> findDealershipByName(String name);
     List<Dealership> findDealershipByCity(String city);
     List<Dealership> findDealershipByState(String state);
