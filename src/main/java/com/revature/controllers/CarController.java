@@ -16,11 +16,7 @@ public class CarController {
     public CarController (CarService cs) {
         this.cs = cs;
     }
-
-/*    @GetMapping("hello")
-    public String greeting() {
-        return "ARE WE RUNNING";
-    }*/
+    
     // NEED TO UPDATE USING RESPONSEENTITY<T>
     // BASIC STUFF WORKS!
 
@@ -45,9 +41,32 @@ public class CarController {
     }
 
     @GetMapping("/car/year/{year}")
-    public List<Car> findCarByYear(@PathVariable String year) {
-        return cs.findCarsByModel(year.toLowerCase());
+    public List<Car> findCarByYear(@PathVariable int year) {
+        return cs.findCarsByYear(year);
     }
 
+    @GetMapping("/car/dealership/{dealership_id}")
+    public List<Car> findCarByDealership(@PathVariable int dealershipID) {
+        return cs.findCarsByDealershipId(dealershipID);
+    }
+
+    @PostMapping("/car")
+    public Car addCar(@RequestBody Car c) {
+        List<Car> cars = cs.findAllCars();
+        if (cars.contains(c)) {
+            return null;
+        }
+        return cs.saveCar(c);
+    }
+
+    @PutMapping("/car")
+    public Car updateCar(@RequestBody Car c) {
+        return cs.updateCar(c);
+    }
+
+    @DeleteMapping("car/")
+    public Car deleteCar(@RequestBody Car c) {
+        return cs.deleteCar(c);
+    }
 
 }
