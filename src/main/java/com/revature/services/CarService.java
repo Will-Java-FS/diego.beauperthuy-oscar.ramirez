@@ -35,8 +35,8 @@ public class CarService {
         return cr.findCarsByYear(year);
     }
 
-    public List<Car> findCarsByDealership(Dealership dealership) {
-        return cr.findCarsByDealership(dealership);
+    public List<Car> findCarsByDealershipId(int dealershipId) {
+        return cr.findCarsByDealershipId(dealershipId);
     }
 
     public Car findCarById(int id) {
