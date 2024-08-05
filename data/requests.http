@@ -1,0 +1,89 @@
+@dealershipURL = http://localhost:8080/dealership
+@carURL = http://localhost:8080/car
+# @token =
+# Authorization: Bearer {{token}}
+
+### GET ALL CARS =================================================================================
+GET {{url}} HTTP/1.1
+
+
+
+### GET CAR BY ID ================================================================================
+GET {{url}}/1 HTTP/1.1
+###
+GET {{url}}/2 HTTP/1.1
+###
+GET {{url}}/4 HTTP/1.1
+
+
+
+### GET BY MAKE ==================================================================================
+GET {{url}}/make/acura HTTP/1.1
+
+
+
+
+
+
+
+### GET BY MODEL
+GET {{url}}/appUserId/2 HTTP/1.1
+
+
+
+
+### GET BY YEAR
+
+
+
+
+
+
+### ADD A CAR
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "make": "Hawaiian Pizza",
+  "model": 7.75,
+  "year": "It's got mozz my guy cmon"
+}
+
+### CHECK IF ADDED
+
+
+
+
+
+### UPDATE CAR
+
+
+
+
+
+
+### CHECK UPDATED CAR
+PUT {{url}}/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "mealId": 1,
+  "title": "Updated Title",
+  "price": 7.75,
+  "description": "Sweet potato bubble milk tea with creme.",
+  "lastUpdated": "2023-06-25T14:27:00",
+  "appUserId": 2,
+  "restaurantId": 1,
+  "public": true
+}
+
+
+### DELETE CAR
+DELETE {{url}}/8
+Content-Type: application/json]
+
+
+
+### CHECK IF DELETED
