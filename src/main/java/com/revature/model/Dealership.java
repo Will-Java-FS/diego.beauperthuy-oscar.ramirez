@@ -23,7 +23,7 @@ public class Dealership {
     @Column
     private String state;
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "dealership_fk")
+    @JoinColumn(name = "dealership_id")
     @JsonManagedReference
     private List<Car> cars;
 
