@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/dealership")
 public class DealershipController {
 
     DealershipServiceImpl ds;
@@ -19,58 +20,75 @@ public class DealershipController {
         this.ds = ds;
     }
 
-    @GetMapping("dealership")
+    @GetMapping
     public List<Dealership> getAllDealerships(){
         return ds.getAllDealerships();
     }
 
-    @GetMapping(value = "dealership", params = {"id"})
-    public Dealership findDealershipById(@RequestParam("id") int id) {
+    @GetMapping("/{id}")
+    public Dealership findDealershipById(@PathVariable int id) {
         return ds.findById(id);
     }
 
-    @GetMapping(value = "dealership", params = {"name"})
-    public List<Dealership> findDealershipByName(@RequestParam("name") String name){
-        return ds.findDealershipByName(name);
+    @GetMapping("/name/{name}")
+    public List<Dealership> findDealershipByName(@PathVariable String name){
+        return ds.findDealershipByName(name.trim().toLowerCase());
     }
 
-    @GetMapping(value = "dealership", params = {"city"})
-    public List<Dealership> findDealershipByCity(@RequestParam("name") String city){
+    @GetMapping("/city/{city}")
+    public List<Dealership> findDealershipByCity(@PathVariable String city){
         return ds.findDealershipByCity(city);
     }
 
-    @GetMapping(value = "dealership", params = {"state"})
-    public List<Dealership> findDealershipByState(@RequestParam("state") String state){
+    @GetMapping("/state/{state}")
+    public List<Dealership> findDealershipByState(@PathVariable String state){
         return ds.findDealershipByState(state);
     }
 
-    @PostMapping("dealership")
-    public Dealership saveDealership(@RequestBody Dealership dealership){
-        return ds.saveDealership(dealership);
+    @PostMapping
+    public ResponseEntity<Dealership> saveDealership(@RequestBody Dealership dealership) {
+
+        try {
+
+            Dealership savedDealership = ds.saveDealership(dealership);
+
+            return new ResponseEntity<>(savedDealership, HttpStatus.CREATED);
+
+        } catch (Exception e) {
+
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @DeleteMapping("dealership")
-    public Dealership deleteDealership(@RequestBody Dealership dealership){
-        return ds.deleteDealership(dealership);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDealershipById(@PathVariable int id) {
+
+        try {
+
+            ds.deleteDealershipById(id);
+
+            return ResponseEntity.ok().build();
+
+        } catch (Exception e) {
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
     }
 
-    @DeleteMapping("dealership/{id}")
-    public Dealership deleteDealershipById(@RequestParam("id") int id){
-        return ds.deleteDealershipById(id);
-    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Dealership> updateDealership(@PathVariable int id, @RequestBody Dealership dealership) {
 
-    @PutMapping("dealership/{id}")
-    public ResponseEntity<Dealership> updateDealership(@PathVariable int id, @RequestBody Dealership dealship){
+        try {
 
-        dealship.setId(id);
+            Dealership updatedDealership = ds.updateDealership(dealership);
 
-        Dealership dealship2 = ds.findById(id);
+            return ResponseEntity.ok(updatedDealership);
 
-        if(dealship2.getId() == id) {
-            dealship = ds.updateDealership(dealship);
-            return new ResponseEntity<>(dealship, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
     }
 }

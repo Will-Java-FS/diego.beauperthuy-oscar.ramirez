@@ -28,15 +28,15 @@ public class DealershipServiceImpl {
     }
 
     public List<Dealership> findDealershipByName(String name){
-        return dealershipRepo.findDealershipByName(name);
+        return dealershipRepo.findDealershipByName(name.trim().toLowerCase());
     }
 
     public List<Dealership> findDealershipByCity(String city){
-        return dealershipRepo.findDealershipByCity(city);
+        return dealershipRepo.findDealershipByCity(city.toLowerCase());
     }
 
     public List<Dealership> findDealershipByState(String state){
-        return dealershipRepo.findDealershipByState(state);
+        return dealershipRepo.findDealershipByState(state.toLowerCase());
     }
 
     //Save a new Dealership
@@ -44,17 +44,9 @@ public class DealershipServiceImpl {
         return dealershipRepo.save(ds);
     }
 
-    //Delete Dealership
-    public Dealership deleteDealership(Dealership ds) {
-        dealershipRepo.delete(ds);
-        return ds;
-    }
-
     //Delete Dealership by ID
-    public Dealership deleteDealershipById(int id) {
-        Dealership ds = dealershipRepo.findById(id);
+    public void deleteDealershipById(int id) {
         dealershipRepo.deleteById(id);
-        return ds;
     }
 
     //Update Dealership
