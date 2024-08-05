@@ -22,8 +22,10 @@ public class Car {
     private String model;
     @Column
     private int year;
+    @Column(insertable=false, updatable=false)
+    private int dealership_id;
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name = "dealership_fk")
+    @JoinColumn(name = "dealership_id")
     @JsonBackReference
     private Dealership dealership;
 
