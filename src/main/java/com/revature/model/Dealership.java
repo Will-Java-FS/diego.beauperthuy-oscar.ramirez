@@ -22,7 +22,7 @@ public class Dealership {
     private String city;
     @Column
     private String state;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "dealership_fk")
     @JsonManagedReference
     private List<Car> cars;
