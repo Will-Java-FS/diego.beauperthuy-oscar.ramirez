@@ -22,6 +22,8 @@ public class Dealership {
     private String city;
     @Column
     private String state;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "dealership_fk")
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "dealership_id")
     @JsonManagedReference
