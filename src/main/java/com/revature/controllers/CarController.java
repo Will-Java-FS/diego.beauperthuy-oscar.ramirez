@@ -73,8 +73,13 @@ public class CarController {
         if (car.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(c);
         }
-        car.get().setId(c.getId());
-        return ResponseEntity.status(HttpStatus.OK).body(car.get());
+        // temp fix, need sleep
+        car.get().setMake(c.getMake());
+        car.get().setYear(c.getYear());
+        car.get().setModel(c.getModel());
+        car.get().setDealership(c.getDealership());
+        Car result = cs.save(car.get());
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @DeleteMapping("car/")
