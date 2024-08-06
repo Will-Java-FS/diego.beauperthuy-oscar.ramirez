@@ -21,6 +21,10 @@ public class CarController {
         this.cs = cs;
     }
 
+    @GetMapping("/hello")
+    public String greeting() {
+        return "Meanie :(";
+    }
     @GetMapping
     public ResponseEntity<List<Car>> getAllCars(){
         List<Car> cars = cs.findAllCars();

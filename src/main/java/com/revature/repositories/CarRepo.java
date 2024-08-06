@@ -11,7 +11,7 @@ import java.util.Optional;
 import com.revature.model.Dealership;
 
 @Repository
-public interface CarRepo extends JpaRepository <Car, Long> {
+public interface CarRepo extends JpaRepository <Car, Integer> {
 
     public Optional<Car> findById(int id);
     public List<Car> findCarsByMake(String make);

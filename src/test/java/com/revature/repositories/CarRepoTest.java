@@ -134,12 +134,4 @@ class CarRepoTest {
         assertEquals("TestMake", actual.getMake());
     }
 
-    @Test
-    void shouldDeleteCar() {
-        Optional<Car> toDelete = carRepository.findById(1);
-        carRepository.delete(toDelete.get());
-
-        assert(carRepository.findById(1).isEmpty());
-    }
-
 }

@@ -22,7 +22,7 @@ public class Car {
     private String model;
     @Column
     private int year;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dealership_id")
     @JsonBackReference
     private Dealership dealership;
