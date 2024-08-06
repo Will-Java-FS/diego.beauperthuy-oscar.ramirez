@@ -16,6 +16,7 @@ public class KnownGoodState {
         if (!hasRun) {
             hasRun = true;
             jdbcTemplate.update("""
+                    SET SEARCH_PATH TO pairedproject;
                     DROP TABLE IF EXISTS car;
                     DROP TABLE IF EXISTS dealership;
                     create table dealership(
