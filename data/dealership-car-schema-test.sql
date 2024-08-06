@@ -1,4 +1,4 @@
-SET SEARCH_PATH TO pairedproject;
+SET SEARCH_PATH TO pairedprojecttest;
 DROP TABLE IF EXISTS car;
 DROP TABLE IF EXISTS dealership;
 
@@ -82,5 +82,5 @@ INSERT INTO car VALUES
     (DEFAULT, 'Volvo', 'V90', 2020, 4),
     (DEFAULT, 'Volvo', 'XC60', 2023, 5);
 
---SELECT * FROM car;
---SELECT * FROM dealership;
+-- SELECT * FROM car;
+-- SELECT * FROM dealership;
