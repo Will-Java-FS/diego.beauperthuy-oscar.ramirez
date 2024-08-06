@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/cars")
 public class CarController {
 
     CarService cs;
@@ -20,69 +21,64 @@ public class CarController {
         this.cs = cs;
     }
 
-    @GetMapping("car")
+    @GetMapping
     public ResponseEntity<List<Car>> getAllCars(){
         List<Car> cars = cs.findAllCars();
         return ResponseEntity.status(HttpStatus.OK).body(cars);
     }
 
-    @GetMapping("car/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Car> findCarById(@PathVariable int id) {
         Optional<Car> c = cs.findCarById(id);
         return c.map(car -> ResponseEntity.status(HttpStatus.OK).body(car))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 
-    @GetMapping("/car/make/{make}")
+    @GetMapping("/make/{make}")
     public ResponseEntity<List<Car>> findCarByMake(@PathVariable String make) {
         List<Car> cars = cs.findCarsByMake(make);
         return ResponseEntity.status(HttpStatus.OK).body(cars);
     }
 
-    @GetMapping("/car/model/{model}")
+    @GetMapping("/model/{model}")
     public ResponseEntity<List<Car>> findCarByModel(@PathVariable String model) {
         List<Car> cars =  cs.findCarsByModel(model);
         return ResponseEntity.status(HttpStatus.OK).body(cars);
     }
 
-    @GetMapping("/car/year/{year}")
+    @GetMapping("/year/{year}")
     public ResponseEntity<List<Car>>  findCarByYear(@PathVariable int year) {
         List<Car> cars =  cs.findCarsByYear(year);
         return ResponseEntity.status(HttpStatus.OK).body(cars);
     }
 
-    @GetMapping("/car/dealership/{dealershipID}")
+    @GetMapping("/dealership/{dealershipID}")
     public ResponseEntity<List<Car>> findCarByDealership(@PathVariable int dealershipID) {
         List<Car> cars =  cs.findCarsByDealershipId(dealershipID);
         return ResponseEntity.status(HttpStatus.OK).body(cars);
     }
 
-    @PostMapping("/car")
+    @PostMapping
     public ResponseEntity<Car> addCar(@RequestBody Car c) {
         Optional<Car> car = cs.findCarById(c.getId());
         if (car.isPresent()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        Car result = cs.save(c);
+        Car result = cs.saveCar(c);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @PutMapping("/car")
+    @PutMapping
     public ResponseEntity<Car> updateCar(@RequestBody Car c) {
         Optional<Car> car = cs.findCarById(c.getId());
         if (car.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(c);
         }
-        // temp fix, need sleep
-        car.get().setMake(c.getMake());
-        car.get().setYear(c.getYear());
-        car.get().setModel(c.getModel());
-        car.get().setDealership(c.getDealership());
-        Car result = cs.save(car.get());
+        Car result = cs.saveCar(c);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @DeleteMapping("car/")
+    @DeleteMapping
     public ResponseEntity<Car> deleteCar(@RequestBody Car c) {
         Car car = cs.deleteCar(c);
         return ResponseEntity.status(HttpStatus.OK).body(car);
