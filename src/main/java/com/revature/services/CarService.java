@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CarService {
@@ -35,25 +36,17 @@ public class CarService {
         return cr.findCarsByYear(year);
     }
 
-    public List<Car> findCarsByDealership(Dealership dealership) {
-        return cr.findCarsByDealership(dealership);
+    public List<Car> findCarsByDealershipId(int dealershipId) {
+        return cr.findCarsByDealershipId(dealershipId);
     }
 
-    public Car findCarById(int id) {
+    public Optional<Car> findCarById(int id) {
         return cr.findById(id);
     }
 
     // CREATE METHOD(S)
-    public Car saveCar(Car c) {
+    public Car save(Car c) {
         return cr.save(c);
-    }
-
-    // UPDATE METHOD(S)
-    public Car updateCar(Car c) {
-        if (cr.findAll().contains(c)) {
-            return cr.save(c);
-        }
-        return null;
     }
 
     // DELETE METHOD(S)

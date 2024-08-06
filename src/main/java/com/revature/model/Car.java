@@ -22,8 +22,8 @@ public class Car {
     private String model;
     @Column
     private int year;
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name = "dealership_fk")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dealership_id")
     @JsonBackReference
     private Dealership dealership;
 

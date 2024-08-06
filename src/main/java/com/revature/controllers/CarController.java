@@ -2,10 +2,13 @@ package com.revature.controllers;
 
 import com.revature.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.revature.model.Car;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CarController {
@@ -17,37 +20,72 @@ public class CarController {
         this.cs = cs;
     }
 
-/*    @GetMapping("hello")
-    public String greeting() {
-        return "ARE WE RUNNING";
-    }*/
-    // NEED TO UPDATE USING RESPONSEENTITY<T>
-    // BASIC STUFF WORKS!
-
     @GetMapping("car")
-    public List<Car> getAllCars(){
-        return cs.findAllCars();
+    public ResponseEntity<List<Car>> getAllCars(){
+        List<Car> cars = cs.findAllCars();
+        return ResponseEntity.status(HttpStatus.OK).body(cars);
     }
 
     @GetMapping("car/{id}")
-    public Car findCarById(@PathVariable int id) {
-        return cs.findCarById(id);
+    public ResponseEntity<Car> findCarById(@PathVariable int id) {
+        Optional<Car> c = cs.findCarById(id);
+        return c.map(car -> ResponseEntity.status(HttpStatus.OK).body(car))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 
     @GetMapping("/car/make/{make}")
-    public List<Car> findCarByMake(@PathVariable String make) {
-        return cs.findCarsByMake(make.toLowerCase());
+    public ResponseEntity<List<Car>> findCarByMake(@PathVariable String make) {
+        List<Car> cars = cs.findCarsByMake(make);
+        return ResponseEntity.status(HttpStatus.OK).body(cars);
     }
 
     @GetMapping("/car/model/{model}")
-    public List<Car> findCarByModel(@PathVariable String model) {
-        return cs.findCarsByModel(model.toLowerCase());
+    public ResponseEntity<List<Car>> findCarByModel(@PathVariable String model) {
+        List<Car> cars =  cs.findCarsByModel(model);
+        return ResponseEntity.status(HttpStatus.OK).body(cars);
     }
 
     @GetMapping("/car/year/{year}")
-    public List<Car> findCarByYear(@PathVariable String year) {
-        return cs.findCarsByModel(year.toLowerCase());
+    public ResponseEntity<List<Car>>  findCarByYear(@PathVariable int year) {
+        List<Car> cars =  cs.findCarsByYear(year);
+        return ResponseEntity.status(HttpStatus.OK).body(cars);
     }
 
+    @GetMapping("/car/dealership/{dealershipID}")
+    public ResponseEntity<List<Car>> findCarByDealership(@PathVariable int dealershipID) {
+        List<Car> cars =  cs.findCarsByDealershipId(dealershipID);
+        return ResponseEntity.status(HttpStatus.OK).body(cars);
+    }
+
+    @PostMapping("/car")
+    public ResponseEntity<Car> addCar(@RequestBody Car c) {
+        Optional<Car> car = cs.findCarById(c.getId());
+        if (car.isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        Car result = cs.save(c);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @PutMapping("/car")
+    public ResponseEntity<Car> updateCar(@RequestBody Car c) {
+        Optional<Car> car = cs.findCarById(c.getId());
+        if (car.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(c);
+        }
+        // temp fix, need sleep
+        car.get().setMake(c.getMake());
+        car.get().setYear(c.getYear());
+        car.get().setModel(c.getModel());
+        car.get().setDealership(c.getDealership());
+        Car result = cs.save(car.get());
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @DeleteMapping("car/")
+    public ResponseEntity<Car> deleteCar(@RequestBody Car c) {
+        Car car = cs.deleteCar(c);
+        return ResponseEntity.status(HttpStatus.OK).body(car);
+    }
 
 }
