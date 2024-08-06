@@ -45,16 +45,8 @@ public class CarService {
     }
 
     // CREATE METHOD(S)
-    public Car saveCar(Car c) {
+    public Car save(Car c) {
         return cr.save(c);
-    }
-
-    // UPDATE METHOD(S)
-    public Car updateCar(Car c) {
-        if (cr.findAll().contains(c)) {
-            return cr.save(c);
-        }
-        return null;
     }
 
     // DELETE METHOD(S)

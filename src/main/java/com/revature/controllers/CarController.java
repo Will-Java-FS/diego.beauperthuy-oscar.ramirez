@@ -51,33 +51,36 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.OK).body(cars);
     }
 
-    @GetMapping("/car/dealership/{dealership_id}")
+    @GetMapping("/car/dealership/{dealershipID}")
     public ResponseEntity<List<Car>> findCarByDealership(@PathVariable int dealershipID) {
-        List<Car> cars =  cs.findCarsByYear(dealershipID);
+        List<Car> cars =  cs.findCarsByDealershipId(dealershipID);
         return ResponseEntity.status(HttpStatus.OK).body(cars);
     }
 
     @PostMapping("/car")
     public ResponseEntity<Car> addCar(@RequestBody Car c) {
-        List<Car> cars = cs.findAllCars();
-        if (cars.contains(c)) {
+        Optional<Car> car = cs.findCarById(c.getId());
+        if (car.isPresent()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(cs.saveCar(c));
+        Car result = cs.save(c);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @PutMapping("/car")
     public ResponseEntity<Car> updateCar(@RequestBody Car c) {
-        List<Car> cars = cs.findAllCars();
-        if (!cars.contains(c)) {
+        Optional<Car> car = cs.findCarById(c.getId());
+        if (car.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(c);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(cs.saveCar(c));
+        car.get().setId(c.getId());
+        return ResponseEntity.status(HttpStatus.OK).body(car.get());
     }
 
     @DeleteMapping("car/")
     public ResponseEntity<Car> deleteCar(@RequestBody Car c) {
-        return ResponseEntity.status(HttpStatus.OK).body(cs.deleteCar(c));
+        Car car = cs.deleteCar(c);
+        return ResponseEntity.status(HttpStatus.OK).body(car);
     }
 
 }
