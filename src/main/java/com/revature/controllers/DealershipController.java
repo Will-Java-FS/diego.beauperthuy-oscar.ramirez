@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/dealership")
@@ -21,28 +22,83 @@ public class DealershipController {
     }
 
     @GetMapping
-    public List<Dealership> getAllDealerships(){
-        return ds.getAllDealerships();
+    public ResponseEntity<List<Dealership>> getAllDealerships(){
+        List<Dealership> dealerships = ds.getAllDealerships();
+
+        if (dealerships == null || dealerships.isEmpty()) {
+
+            // No Content
+            return ResponseEntity.noContent().build();
+
+        } else {
+
+            // 200 OK
+            return ResponseEntity.ok(dealerships);
+
+        }
     }
 
     @GetMapping("/{id}")
-    public Dealership findDealershipById(@PathVariable int id) {
-        return ds.findById(id);
+    public ResponseEntity<Dealership> findDealershipById(@PathVariable int id) {
+
+        Optional<Dealership> dealership = Optional.ofNullable(ds.findById(id));
+
+        // 200 OK if found
+        return dealership.map(ResponseEntity::ok)
+
+                //404 Not found
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/name/{name}")
-    public List<Dealership> findDealershipByName(@PathVariable String name){
-        return ds.findDealershipByName(name.trim().toLowerCase());
+    public ResponseEntity<List<Dealership>> findDealershipByName(@PathVariable String name){
+
+        List<Dealership> dealerships = ds.findDealershipByName(name.trim().toLowerCase());
+
+        if (dealerships == null || dealerships.isEmpty()) {
+
+            // 404 Not found
+            return ResponseEntity.notFound().build();
+
+        }   else {
+
+            // 200 OK
+            return ResponseEntity.ok(dealerships);
+        }
     }
 
     @GetMapping("/city/{city}")
-    public List<Dealership> findDealershipByCity(@PathVariable String city){
-        return ds.findDealershipByCity(city);
+    public ResponseEntity<List<Dealership>> findDealershipByCity(@PathVariable String city){
+
+        List<Dealership> dealerships = ds.findDealershipByCity(city.trim().toLowerCase());
+
+        if (dealerships == null || dealerships.isEmpty()) {
+
+            // 404 Not found
+            return ResponseEntity.notFound().build();
+
+        }   else {
+
+            // 200 OK
+            return ResponseEntity.ok(dealerships);
+        }
     }
 
     @GetMapping("/state/{state}")
-    public List<Dealership> findDealershipByState(@PathVariable String state){
-        return ds.findDealershipByState(state);
+    public ResponseEntity<List<Dealership>> findDealershipByState(@PathVariable String state){
+
+        List<Dealership> dealerships = ds.findDealershipByState(state.trim().toLowerCase());
+
+        if (dealerships == null || dealerships.isEmpty()) {
+
+            // 404 Not found
+            return ResponseEntity.notFound().build();
+
+        }   else {
+
+            // 200 OK
+            return ResponseEntity.ok(dealerships);
+        }
     }
 
     @PostMapping
@@ -52,11 +108,13 @@ public class DealershipController {
 
             Dealership savedDealership = ds.saveDealership(dealership);
 
-            return new ResponseEntity<>(savedDealership, HttpStatus.CREATED);
+            // Created
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedDealership);
 
         } catch (Exception e) {
 
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            // 500 Internal server error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -65,13 +123,24 @@ public class DealershipController {
 
         try {
 
-            ds.deleteDealershipById(id);
+            Optional<Dealership> dealership = Optional.ofNullable(ds.findById(id));
 
-            return ResponseEntity.ok().build();
+            if (dealership.isPresent()) {
+                ds.deleteDealershipById(id);
+
+                // 200 OK
+                return ResponseEntity.ok().build();
+
+            }   else {
+
+                    // 404 Not found
+                    return ResponseEntity.notFound().build();
+            }
 
         } catch (Exception e) {
 
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            // 500 Internal server error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
         }
     }
@@ -81,13 +150,25 @@ public class DealershipController {
 
         try {
 
-            Dealership updatedDealership = ds.updateDealership(dealership);
+            Optional <Dealership> existingDealership = Optional.ofNullable(ds.findById(id));
 
-            return ResponseEntity.ok(updatedDealership);
+            if (existingDealership.isPresent()) {
+
+                Dealership updatedDealership = ds.updateDealership(dealership);
+
+                // 200 OK
+                return ResponseEntity.ok(updatedDealership);
+
+            }   else {
+
+                    // 404 Not found
+                    return ResponseEntity.notFound().build();
+            }
 
         } catch (Exception e) {
 
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            // 500 Internal server error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
         }
     }
